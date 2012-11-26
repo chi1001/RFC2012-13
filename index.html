@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+
+<!--For JQTouch  -->
+        <link rel="stylesheet" href="jqtouch/themes/css/jqtouch.css" title="jQTouch">
+            <script src="jqtouch/src/lib/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+            <script src="jqtouch/src/jqtouch.min.js" type="text/javascript" charset="utf-8"></script>
+            <!-- Uncomment the following two lines (and comment out the previous two) to use jQuery instead of Zepto. -->
+            <!-- <script src="../../src/lib/jquery-1.7.min.js" type="application/x-javascript" charset="utf-8"></script> -->
+            <!-- <script src="../../src/jqtouch-jquery.min.js" type="application/x-javascript" charset="utf-8"></script> -->
+            
+            <script src="jqtouch/extensions/jqt.themeswitcher.min.js" type="application/x-javascript" charset="utf-8"></script>
+            
+            <script type="text/javascript" charset="utf-8">
+                var jQT = new $.jQTouch({
+                                        icon: 'jqtouch.png',
+                                        icon4: 'jqtouch4.png',
+                                        addGlossToIcon: false,
+                                        startupScreen: 'jqt_startup.png',
+                                        statusBar: 'black-translucent',
+                                        themeSelectionSelector: '#jqt #themes ul',
+                                        preloadImages: []
+                                        });
+                
+                // Some sample Javascript functions:
+                $(function(){
+                  
+                  // Show a swipe event on swipe test
+                  $('#swipeme').swipe(function(evt, data) {
+                                      var details = !data ? '': '<strong>' + data.direction + '/' + data.deltaX +':' + data.deltaY + '</strong>!';
+                                      $(this).html('You swiped ' + details );
+                                      $(this).parent().after('<li>swiped!</li>')
+                                      });
+                  
+                  $('#tapme').tap(function(){
+                                  $(this).parent().after('<li>tapped!</li>')
+                                  });
+                  
+                  $('a[target="_blank"]').bind('click', function() {
+                                               if (confirm('This link opens in a new window.')) {
+                                               return true;
+                                               } else {
+                                               return false;
+                                               }
+                                               });
+                  
+                  // Page animation callback events
+                  $('#pageevents').
+                  bind('pageAnimationStart', function(e, info){
+                       $(this).find('.info').append('Started animating ' + info.direction + '&hellip;  And the link ' +
+                                                    'had this custom data: ' + $(this).data('referrer').data('custom') + '<br>');
+                       }).
+                  bind('pageAnimationEnd', function(e, info){
+                       $(this).find('.info').append('Finished animating ' + info.direction + '.<br><br>');
+                       
+                       });
+                  
+                  // Page animations end with AJAX callback event, example 1 (load remote HTML only first time)
+                  $('#callback').bind('pageAnimationEnd', function(e, info){
+                                      // Make sure the data hasn't already been loaded (we'll set 'loaded' to true a couple lines further down)
+                                      if (!$(this).data('loaded')) {
+                                      // Append a placeholder in case the remote HTML takes its sweet time making it back
+                                      // Then, overwrite the "Loading" placeholder text with the remote HTML
+                                      $(this).append($('<div>Loading</div>').load('ajax.html .info', function() {
+                                                                                  // Set the 'loaded' var to true so we know not to reload
+                                                                                  // the HTML next time the #callback div animation ends
+                                                                                  $(this).parent().data('loaded', true);
+                                                                                  }));
+                                      }
+                                      });
+                  // Orientation callback event
+                  $('#jqt').bind('turn', function(e, dat a){
+                                 $('#orient').html('Orientation: ' + data.orientation);
+                                 });
+                  
+                  });
+                </script>
+            <style type="text/css" media="screen">
+                #jqt.fullscreen #home .info {
+                    display: none;
+                }
+                div#jqt #about {
+                    padding: 100px 10px 40px;
+                    text-shadow: rgba(0, 0, 0, 0.3) 0px -1px 0;
+                    color: #999;
+                    font-size: 13px;
+                    text-align: center;
+                    background: #161618;
+                }
+                div#jqt #about p {
+                    margin-bottom: 8px;
+                }
+                div#jqt #about a {
+                    color: #fff;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+                </style>
+<!--END For JQTouch  -->
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Rubell Family Collection</title>
+    
+<!-- JS to play audio -->
+            <script type="text/javascript" charset="utf-8">
+                $.jQTouch({
+                          icon: 'tower_logo.png',
+                          statusBar: 'black'
+                          });
+                $(document).ready(function () {
+                                  var audio = $('#audio');
+                                  $('#audioM101').tap(function() { audio.attr('src', 'audio/OM-Overview-Work7n8.m4a')[0].play()});
+                                  $('#audioM1stop').tap(function() { audio.attr('src', 'audio/OM-Overview-Work7n8.m4a')[0].pause()});
+                                  $('#audioM1back').tap(function() { audio.attr('src', 'audio/OM-Overview-Work7n8.m4a')[0].pause()});
+                                  
+                                  $('#audioM201').tap(function() { audio.attr('src', 'audio/OM-Yoga.m4a')[0].play()});
+                                  $('#audioM2stop').tap(function() { audio.attr('src', 'audio/OM-Yoga.m4a')[0].pause()});
+                                  $('#audioM2back').tap(function() { audio.attr('src', 'audio/OM-Yoga.m4a')[0].pause()});
+                                  
+                                  $('#audioM301').tap(function() { audio.attr('src', 'audio/OM-Chorizo.m4a')[0].play()});
+                                  $('#audioM3stop').tap(function() { audio.attr('src', 'audio/OM-Chorizo.m4a')[0].pause()});
+                                  $('#audioM3back').tap(function() { audio.attr('src', 'audio/OM-Chorizo.m4a')[0].pause()});
+                                  
+                                  $('#audioM401').tap(function() { audio.attr('src', 'audio/OM-Mango.m4a')[0].play()});
+                                  $('#audioM4stop').tap(function() { audio.attr('src', 'audio/OM-Mango.m4a')[0].pause()});
+                                  $('#audioM4back').tap(function() { audio.attr('src', 'audio/OM-Mango.m4a')[0].pause()});
+                                  
+                                                                    
+                                  $('#audioA01').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA01stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA01back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA02').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA02stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA02back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA03').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA03stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA03back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA04').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA04stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA04back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA05').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA05stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA05back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA06').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA06stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA06back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA07').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA07stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA07back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA08').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA08stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA08back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA09').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA09stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA09back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA10').tap(function() { audio.attr('src', 'audio/AT-John-Miller.m4a')[0].play()});
+                                  $('#audioA10stop').tap(function() { audio.attr('src', 'audio/AT-John-Miller.m4a')[0].pause()});
+                                  $('#audioA10back').tap(function() { audio.attr('src', 'audio/AT-John-Miller.m4a')[0].pause()});
+                                  
+                                  $('#audioA11').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA11stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA11back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA12').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA12stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA12back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA13').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA13stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA13back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA14').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA14stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA14back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA15').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA15stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA15back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA16').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA16stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA16back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA17').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA17stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA17back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA18').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA18stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA18back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA19').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA19stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA19back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA20').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA20stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA20back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA21').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA21stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA21back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA22').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA22stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA22back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA23').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA23stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA23back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA24').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA24stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA24back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA25').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA25stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA25back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA26').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA26stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA26back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA27').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].play()});
+                                  $('#audioA27stop').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  $('#audioA27back').tap(function() { audio.attr('src', 'audio/OM-a01.mp3')[0].pause()});
+                                  
+                                  $('#audioA28').tap(function() { audio.attr('src', 'audio/AT-Karsten-Fodinger.m4a')[0].play()});
+                                  $('#audioA28stop').tap(function() { audio.attr('src', 'audio/AT-Karsten-Fodinger.m4a')[0].pause()});
+                                  $('#audioA28back').tap(function() { audio.attr('src', 'audio/AT-Karsten-Fodinger.m4a')[0].pause()});
+                                  
+                                  });
+                </script>
+            <audio id="audio"></audio>
+<!-- END JS to play audio -->
+    
+<!-- For embed external pages -->
+            <style type="text/css">div>iframe{width:100%;height:100%;margin:0;padding:0;border-width:0;}</style>
+<!-- END For embed external pages -->
+
+            
+    </head>
+    
+    
+    <body>
+        <div class="app">
+            <h1>Apache Cordova</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+        </div>
+        <script type="text/javascript" src="cordova-2.1.0.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+        
+        <div id="home" class="current">
+            <div class="toolbar">
+                <h1>RFC 2012-13</h1>
+                <a class="button slideup" id="infoButton" href="#about">About</a>
+            </div>
+            <div class="scroll">
+                <ul class="rounded">
+                    <li class="arrow"><a href="#oscarmurillo">Oscar Murillo: Work <small class="counter">4</small><br><img class="img100" src="images/OM-bg-01.png"></a> </li>
+                    <li class="arrow"><a href="#alonetogether">Alone Together <small class="counter">27</small><br><img class="img100" src="images/AT-bg-01.png"></a> </li>
+                    <li class="arrow"><a href="#contact">Contact Us </a></li>
+                </ul>
+
+                
+                            </div>
+        </div>
+        
+        <div id="oscarmurillo">
+            <div class="toolbar">
+                <a class="back" href="#">Home</a>
+            </div>
+            <ul class="edgetoedge scroll">
+                <li class="sep">Oscar Murillo: Work</li>
+                <li class="arrow"><a href="#M1">M1 - Intro, work 7, work 8</a></li>
+                <li class="arrow"><a href="#M2">M2 - Untitled (yoga)</a></li>
+                <li class="arrow"><a href="#M3">M3 - Untitled (chorizo)</a></li>
+                <li class="arrow"><a href="#M4">M4 - Untitled (mango)</a></li>
+            </ul>
+        </div>
+        
+        <div id="alonetogether">
+            <div class="toolbar">
+                <a class="back" href="#">Home</a>
+            </div>
+            <ul class="edgetoedge scroll">
+                <li class="sep">Alone Together</li>
+                <li class="arrow"><a href="#A01">A01 - Zhu Jinshi</a></li>
+                <li class="arrow"><a href="#A02">A02 - Thomas Houseago</a></li>
+                <li class="arrow"><a href="#A03">A03 - Wade Guyton</a></li>
+                <li class="arrow"><a href="#A04">A04 - Jason Rhoades</a></li>
+                <li class="arrow"><a href="#A05">A05 - Maurizio Cattelan</a></li>
+                <li class="arrow"><a href="#A06">A06 - Richard Jackson</a></li>
+                <li class="arrow"><a href="#A07">A07 - Secundino Hernandez</a></li>
+                <li class="arrow"><a href="#A08">A08 - Yoshitomo Nara</a></li>
+                <li class="arrow"><a href="#A09">A09 - Cady Noland</a></li>
+                <li class="arrow"><a href="#A10">A10 - John Miller</a></li>
+                <li class="arrow"><a href="#A11">A11 - Neo Rauch</a></li>
+                <li class="arrow"><a href="#A12">A12 - Takashi Murakami</a></li>
+                <li class="arrow"><a href="#A13">A13 - Ryan Trecartin</a></li>
+                <li class="arrow"><a href="#A14">A14 - Nate Lowman</a></li>
+                <li class="arrow"><a href="#A15">A15 - Charles Ray</a></li>
+                <li class="arrow"><a href="#A16">A16 - R.H. Quaytman</a></li>
+                <li class="arrow"><a href="#A17">A17 - </a></li>
+                <li class="arrow"><a href="#A18">A18 - Andro Wekua</a></li>
+                <li class="arrow"><a href="#A19">A19 - Franz West</a></li>
+                <li class="arrow"><a href="#A20">A20 - Fischli and Weiss</a></li>
+                <li class="arrow"><a href="#A21">A21 - Rosemarie Trockel</a></li>
+                <li class="arrow"><a href="#A22">A22 - Thomas Schütte</a></li>
+                <li class="arrow"><a href="#A23">A23 - Ryan Sullivan</a></li>
+                <li class="arrow"><a href="#A24">A24 - Albert Oehlen</a></li>
+                <li class="arrow"><a href="#A25">A25 - Paloma Varga Weisz</a></li>
+                <li class="arrow"><a href="#A26">A26 - Jon Pestoni</a></li>
+                <li class="arrow"><a href="#A27">A27 - Valentin Carron</a></li>
+                <li class="arrow"><a href="#A28">A28 - Karsten FÖdinger</a></li>
+                <li class="arrow"><a href="#A29">A29 - Oscar Tuazon</a></li>
+                <li ><a href="#"></a></li>
+
+
+                
+            </ul>
+        </div>
+                    
+        <div id="M1">
+            <div class="toolbar">
+                <h1>M1</h1>
+                <a class="back" href="#" id="audioM1back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Intro, work 7, work 8</h2></li>
+                <ul class="individual">
+                    <li><a href="#" class="greyButton" id="audioM101">Play</a></li>
+                    <li><a href="#" class="greyButton" id="audioM1stop">Stop</a></li>
+                </ul>
+                <li><img class="img100" src="images/OM-overview.png" alt="Overall view"><li>
+                <li><img class="img100" src="images/Murillo-O_Work-7.jpg" alt="work #7"><li>
+                <li><img class="img100" src="images/Murillo-O_Work-8.jpg" alt="work #8"><li>
+                    
+                                        </ul>
+        </div>
+        
+        <div id="M2">
+            <div class="toolbar">
+                <h1>M2</h1>
+                <a class="back" href="#" id="audioM2back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Untitled (yoga)</h2></li>
+                 <ul class="individual">
+                    <li><a href="#" class="greyButton" id="audioM201">Play</a></li>
+                    <li><a href="#" class="greyButton" id="audioM2stop">Stop</a></li>
+                 </ul>
+                <li><img class="img100" src="images/OM-overview.png" alt="Overall view"><li>
+                <li><img class="img100" src="images/Murillo-O_Untitled-Yoga.jpg" alt="Untitled (yoga)"><li>                    
+            </ul>
+        </div>
+        
+        <div id="M3">
+            <div class="toolbar">
+                <h1>M3</h1>
+                <a class="back" href="#" id="audioM3back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Untitled (chorizo)</h2></li>
+                <ul class="individual">
+                    <li><a href="#" class="greyButton" id="audioM301">Play</a></li>
+                    <li><a href="#" class="greyButton" id="audioM3stop">Stop</a></li>
+                </ul>
+                <li><img class="img100" src="images/OM-overview.png" alt="Overall view"><li>
+                <li><img class="img100" src="images/Murillo-O_Untitled-Chorizo.jpg" alt="Untitled (chorizo)"><li>
+                    </ul>
+        </div>
+        
+        
+        
+        <div id="M4">
+            <div class="toolbar">
+                <h1>M4</h1>
+                <a class="back" href="#" id="audioM4back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Untitled (mango)</h2></li>
+                <ul class="individual">
+                    <li><a href="#" class="greyButton" id="audioM401">Play</a></li>
+                    <li><a href="#" class="greyButton" id="audioM4stop">Stop</a></li>
+                </ul>
+            <li><img class="img100" src="images/OM-overview.png" alt="Overall view"><li>
+                    <li><img class="img100" src="images/Murillo-O_Untitled-Mango.jpg" alt="Untitled (mango)"><li>
+                        </ul>
+        </div>
+        
+               
+        <div id="A01">
+            <div class="toolbar">
+                <h1>A01</h1>
+                <a class="back" href="#" id="audioA01back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Zhu Jinshi</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA01">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA01stop">Stop</a></li>
+                    </ul>
+                    <li><img src="images/OM-bg-a02.png" alt="Bingo Paintings"><li>
+                    </ul>
+        </div>
+        
+        <div id="A02">
+            <div class="toolbar">
+                <h1>A02</h1>
+                <a class="back" href="#" id="audioA02back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Thomas Houseago</h2></li>
+                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA02">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA02stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Houseago-T_Untitled-RedMan.jpg" alt="Thomas Houseago"><li>
+
+                    </ul>
+        </div>
+        
+        <div id="A03">
+            <div class="toolbar">
+                <h1>A03</h1>
+                <a class="back" href="#" id="audioA03back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Wade Guyton</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA03">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA03stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Guyton_Wade-Untitled-X-2007.jpg" alt="Wade Guyton"><li>
+
+                    </ul>
+        </div>
+        
+        
+        <div id="A04">
+            <div class="toolbar">
+                <h1>A04</h1>
+                <a class="back" href="#" id="audioA04back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Jason Rhoades</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA04">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA04stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Rhoades-Jason_Untitled-Chandelier.jpg" alt="Jason Rhoades"><li>
+            </ul>
+            
+        </div>
+        
+        <div id="A05">
+            <div class="toolbar">
+                <h1>A05</h1>
+                <a class="back" href="#" id="audioA05back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Maurizio Cattelan</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA05">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA05stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Cattelan_M-LaRivoluzioneSiamoNoi-02.jpg" alt="Maurizio Cattelan"><li>
+
+            </ul>
+        </div>
+        
+        
+        <div id="A06">
+            <div class="toolbar">
+                <h1>A06</h1>
+                <a class="back" href="#" id="audioA06back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Richard Jackson</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA06">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA06stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Jackson-R_TheBlueRoom-04.jpg" alt="Richard Jackson"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A07">
+            <div class="toolbar">
+                <h1>A07</h1>
+                <a class="back" href="#" id="audioA07back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Secundino Hernandez</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA07">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA07stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/OM-bg-a02.png" alt="Bingo Paintings"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A08">
+            <div class="toolbar">
+                <h1>A08</h1>
+                <a class="back" href="#" id="audioA08back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Yoshitomo Nara</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA08">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA08stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Nara_Yoshitomo-HyperEnough-1997.jpg" alt="Yoshitomo Nara"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A09">
+            <div class="toolbar">
+                <h1>A09</h1>
+                <a class="back" href="#" id="audioA09back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Cady Noland</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA09">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA09stop">Stop</a></li>
+                    </ul>
+               <li><img src="images/Noland_Cady-ThisPieceHasNoTitleYet.jpg" alt="Cady Noland"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A10">
+            <div class="toolbar">
+                <h1>A10</h1>
+                <a class="back" href="#" id="audioA10back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>John Miller</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="greyButton" id="audioA10">Play</a></li>
+                        <li><a href="#" class="greyButton" id="audioA10stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Miller-J_ARefusalToAcceptLimits-04.jpg" alt="John Miller"><li>                 
+            </ul>
+        </div>
+        
+        
+        <div id="A11">
+            <div class="toolbar">
+                <h1>A11</h1>
+                <a class="back" href="#" id="audioA11back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Neo Rauch</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA11">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA11stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Rauch-N_Vorfuhrung.jpg" alt="Neo Rauch"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A12">
+            <div class="toolbar">
+                <h1>A12</h1>
+                <a class="back" href="#" id="audioA12back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Takashi Murakami</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA12">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA12stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Murakami_PO + Ku.jpg" alt="Takashi Murakami"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A13">
+            <div class="toolbar">
+                <h1>A13</h1>
+                <a class="back" href="#" id="audioA13back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Ryan Trecartin</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA13">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA13stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Trecartin-R_Trill-ogyComp2.jpg" alt="Ryan Trecartin"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A14">
+            <div class="toolbar">
+                <h1>A14</h1>
+                <a class="back" href="#" id="audioA14back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Nate Lowman</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA14">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA14stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Lowman-N_TrashLandingMarilyn.jpg" alt="Nate Lowman"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A15">
+            <div class="toolbar">
+                <h1>A15</h1>
+                <a class="back" href="#" id="audioA15back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Charles Ray</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA15">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA15stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Ray-C_OhCharley.jpg" alt="Charles Ray"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A16">
+            <div class="toolbar">
+                <h1>A16</h1>
+                <a class="back" href="#" id="audioA16back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>R.H. Quaytman</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA16">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA16stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Quaytman-RH_EvasArcheApril3.jpg" alt="R.H. Quaytman"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A17">
+            <div class="toolbar">
+                <h1>A17</h1>
+                <a class="back" href="#" id="audioA17back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>???</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA17">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA17stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/OM-bg-a02.png" alt="Bingo Paintings"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A18">
+            <div class="toolbar">
+                <h1>A18</h1>
+                <a class="back" href="#" id="audioA18back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Andro Wekua</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA18">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA18stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/OM-bg-a02.png" alt="Bingo Paintings"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A19">
+            <div class="toolbar">
+                <h1>A19</h1>
+                <a class="back" href="#" id="audioA19back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Franz West</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA19">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA19stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/West-F_Untitled_03.jpg" alt="Franz West"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A20">
+            <div class="toolbar">
+                <h1>A20</h1>
+                <a class="back" href="#" id="audioA20back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Fischli and Weiss</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA20">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA20stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Peter-Fischli_N_David-Weiss_BoiteDeNuit.jpg" alt="Fischli and Weiss"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A21">
+            <div class="toolbar">
+                <h1>A21</h1>
+                <a class="back" href="#" id="audioA21back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Rosemarie Trockel</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA21">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA21stop">Stop</a></li>
+                    </ul>
+               <li><img src="images/Trockel-R_Untitled-yellowskull.jpg" alt="Rosemarie Trockel"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A22">
+            <div class="toolbar">
+                <h1>A22</h1>
+                <a class="back" href="#" id="audioA22back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Thomas Schütte</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA22">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA22stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Thomas_Schutte-Grosse_Geister-wall.jpg" alt="Thomas Schutte"><li>
+            </ul>
+        </div>
+        
+        <div id="A23">
+            <div class="toolbar">
+                <h1>A23</h1>
+                <a class="back" href="#" id="audioA23back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Ryan Sullivan</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA23">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA23stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/OM-bg-a02.png" alt="Ryan Sullivan"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A24">
+            <div class="toolbar">
+                <h1>A24</h1>
+                <a class="back" href="#" id="audioA24back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Albert Oehlen</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA24">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA24stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Oehlen-A_Ice.jpg" alt="Albert Oehlen"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A25">
+            <div class="toolbar">
+                <h1>A25</h1>
+                <a class="back" href="#" id="audioA25back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Paloma Varga Weisz</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA25">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA25stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/VargaWeisz-P_Nabadi.jpg" alt="Paloma Varga Weisz"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A26">
+            <div class="toolbar">
+                <h1>A26</h1>
+                <a class="back" href="#" id="audioA26back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Jon Pestoni</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA26">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA26stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Pestoni-J_BlueDrugs.jpg" alt="Jon Pestoni"><li>
+            </ul>
+        </div>
+        
+        
+        <div id="A27">
+            <div class="toolbar">
+                <h1>A27</h1>
+                <a class="back" href="#" id="audioA27back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Valentin Carron</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA27">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA27stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/OM-bg-a02.png" alt="Valentin Carron"><li>
+            </ul>
+        </div>
+        
+        <div id="A28">
+            <div class="toolbar">
+                <h1>A28</h1>
+                <a class="back" href="#" id="audioA28back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Karsten FÖdinger</h2></li>                    
+                    <ul class="individual">
+                        <li><a href="#" class="greyButton" id="audioA28">Play</a></li>
+                        <li><a href="#" class="greyButton" id="audioA28stop">Stop</a></li>
+                    </ul>
+               <li><img src="images/Fodinger-K_Frablo.jpg" alt="Karsten FÖdinger"><li>
+            </ul>
+        </div>
+        
+        <div id="A29">
+            <div class="toolbar">
+                <h1>A29</h1>
+                <a class="back" href="#" id="audioA27back">back</a>
+            </div>
+            <ul class="edgetoedge roll">
+                <li class="sep"><h2>Oscar Tuazon</h2></li>
+                    <ul class="individual">
+                        <li><a href="#" class="whiteButton" id="audioA27">Play</a></li>
+                        <li><a href="#" class="whiteButton" id="audioA27stop">Stop</a></li>
+                    </ul>
+                <li><img src="images/Tuazon-O_HiredHand-01.jpg" alt="Oscar Tuazon"><li>
+            </ul>
+        </div>
+                
+        <div id="about">
+            <div class="toolbar">
+                <h1>About Us</h1>
+                <a class="back" href="#">Home</a>
+            </div>
+			<ul class="edgetoedge scroll">
+                <li>
+                    <div id="abouttxt">
+                        <p><img src="images/Facade-2011.png" alt="RFC Facade"></p>
+                            <p>&nbsp;</p>
+                            <p>The Rubell Family Collection (RFC) was established in 1964 in New York City, shortly after its founders Donald and Mera Rubell were married. It is now one of the world's largest, privately owned contemporary art collections.</br>
+                            </p>
+                            <p>&nbsp;</p>
+                            <p>In Miami, Florida, since 1993, the RFC is exhibited within a 45,000-square-foot repurposed Drug Enforcement Agency confiscated goods facility and is publicly accessible. The Contemporary Arts Foundation (CAF) was created in 1994 to expand the RFC's public mission inside the paradigm of a contemporary art museum.</p>
+                            <p>&nbsp;</p>
+                            <p> The collection is constantly expanding and features such well-known artists as Jean-Michel Basquiat, Keith Haring, Damien Hirst, Jeff Koons, Cindy Sherman, Kara Walker and Andy Warhol. In addition to displaying internationally established artists, the RFC actively acquires, exhibits and champions emerging artists working at the forefront of contemporary art.</p>
+                            <p>&nbsp;</p>
+                            <p>Each year the Foundation presents thematic exhibitions drawn from the collection with accompanying catalogs. These exhibitions often travel to museums around the world. Recent exhibitions have been presented at the Brooklyn Museum of Art, the Palm Springs Art Museum in California and the North Carolina Museum of Art. Sponsors for recent exhibitions have included Bank of America, Puma, Audi, Lanvin and Dedon.</p>
+                            <p>&nbsp;</p>
+                            <p> The Foundation has been recognized as a pioneer in what is often referred to as the "Miami model," whereby private collectors create a new, independent form of public institution.</p>
+                            <p>&nbsp;</p>
+                            <p> The Foundation also maintains an internship program, an ongoing lecture series and an extensive artwork loan program to facilitate exhibitions at museums around the world.  Its ongoing partnership with Miami-Dade County Public Schools enables thousands of schoolchildren to visit and engage with the Foundation every year.  In addition, the Foundation has a public research library containing over 40,000 volumes and a comprehensive contemporary art bookstore.</p>
+                            <p>&nbsp;</p>                           
+                       </div></li>
+            </ul>
+        </div>
+        
+        
+        
+        
+        <div id="contact">
+            <div class="toolbar">
+                <h1>Visitor Info</h1>
+                <a class="back" href="#">Home</a>
+            </div>
+            <ul class="edgetoedge scroll">
+                <li>
+                    <div id="abouttxt">
+                        <p><img src="images/visitors.png" width="280" height="186" alt="RFC Facade"></p>
+                            <p>&nbsp;</p>
+                            Rubell Family Collection /<br>
+                            Contemporary Arts Foundation<br>
+                            95 NW 29th Street<br>
+                            Miami, FL 33127<br>
+                            United States<br>
+                            T: +1 (305) 573-6090<br>
+                            F: +1 (305) 573-6023<br>
+                            <a href="mailto:info@rfc.museum">E: info@RFC.museum</a><br>
+                            Free parking is available in front of the building or in the parking lot across the street.
+                            </p>
+                    <p>&nbsp;</p>  
+                            </div>
+                </li>
+            </ul>
+        </div>
+
+        
+    </body>
+</html>
